@@ -15,6 +15,10 @@ def download_video(input_vid):
 		subprocess.call(["touch", fy2b_dir+"/videos/{}.lock".format(input_vid)])
 		subprocess.Popen(["youtube-dl", '-f', 'bestvideo[height<=480]+bestaudio[ext=m4a]', "https://www.youtube.com/watch?v={}".format(input_vid), '-o', fy2b_dir+'/videos/%(id)s.mp4'])
 
+def get_info(parameter, vid):
+	output = subprocess.check_output(['youtube-dl', parameter, vid])
+	return output.decode('utf-8', "ignore")
+
 
 app = Flask(__name__)
 
@@ -41,8 +45,9 @@ def downloader(url="https://www.baidu.com"):
 @app.route("/watch")
 def index():
 	if request.method == "GET":
+		vid = request.args.get('v')
 		download_video(request.args.get('v'))
-	return(render_template(player_templapte, vid = request.args.get('v')))
+	return(render_template(player_templapte, vid = request.args.get('v'), title = get_info('--get-title', vid), description = get_info('--get-description', vid)))
 
 @app.route("/video")
 @app.route("/video/<v_id>")
