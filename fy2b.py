@@ -44,7 +44,7 @@ if app.config["DEBUG"]:
         response.headers["Pragma"] = "no-cache"
         return response
 
-@app.route("/d/<url>")
+@app.route("/fy2b/d/<url>")
 def downloader(url="https://www.baidu.com"):
 	r = requests.get(base64.b64decode(url).decode("utf-8"))
 	response = make_response(r.content)
@@ -53,9 +53,9 @@ def downloader(url="https://www.baidu.com"):
 	return response
 
 
-@app.route("/")
-@app.route("/index.php")
-@app.route("/watch")
+@app.route("/fy2b")
+@app.route("/fy2b/index.php")
+@app.route("/fy2b/watch")
 def index():
 	if request.method == "GET":
 		vid = request.args.get('v')
@@ -69,12 +69,13 @@ def index():
 		dislike = vid_info.dislike,
 		views = vid_info.views))
 
-@app.route("/video")
-@app.route("/video/<v_id>")
+@app.route("/fy2b/video")
+@app.route("/fy2b/video/<v_id>")
 def video(v_id='404'):
 	vid_file_url = vid_url+vid_url+".mp4"
 	status = requests.head(vid_file_url)
 	if str(status.status_code)[0] != '2':
+		sleep(1)
 		return(redirect(request.url))
 		# status = requests.head(status.headers["Location"])
 	else:
