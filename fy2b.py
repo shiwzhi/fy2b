@@ -79,7 +79,7 @@ def video(v_id='404'):
 		return(redirect(request.url))
 		# status = requests.head(status.headers["Location"])
 	else:
-		return(redirect(request.url))
+		return(redirect(vid_file_url))
 
 
 if __name__ == "__main__":
