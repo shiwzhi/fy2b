@@ -8,7 +8,7 @@ import base64
 fy2b_dir = "/root/fy2b"
 vid_url = "https://swz1994.com/fy2b/videos/"
 
-player_html = "play.html"
+player_templapte = "player.html"
 
 def download_video(input_vid):
 	if os.path.isfile(fy2b_dir+'/videos/{}.lock'.format(input_vid)) == False:
@@ -42,7 +42,7 @@ def downloader(url="https://www.baidu.com"):
 def index():
 	if request.method == "GET":
 		download_video(request.args.get('v'))
-	return(render_template(player_html, vid = request.args.get('v')))
+	return(render_template(player_templapte, vid = request.args.get('v')))
 
 @app.route("/video")
 @app.route("/video/<v_id>")
