@@ -7,14 +7,36 @@
 	<script src="//cdn.bootcss.com/jquery/3.1.1/jquery.min.js"></script>
 	<script src="//cdn.bootcss.com/bootstrap/4.0.0-alpha.4/js/bootstrap.js"></script>
 
-	<title>get u the video</title>
+	<title>fy2b</title>
 </head>
-<body>
-	<div>
-		<video width="50%" height="auto" controls autoplay>
-			<source src={{ url_for("video") }}/{{ vid }}>
-			Your browser does not support html5 video!
-		</video>
+<bod>
+	<div class="container">
+		<div class="row">
+		<div class="col-md-12">
+			<video width="100%" height="auto" controls autoplay>
+					<source src={{ url_for("video") }}/{{ vid }}>
+					你的浏览器已经灭绝了
+			</video>
+		</div>
+
+
+				
+		</div>
+		
+		<div class="row">
+			<div class="col-md-12" style="font-size: 24px">{{ title }}</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12" style="font-size: 24px">{{ views }} views</div>
+		</div>
+
+				
+
+			
+
+
+		
+
 	</div>
 </body>
 </html>
