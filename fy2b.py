@@ -72,7 +72,7 @@ def index():
 @app.route("/fy2b/video")
 @app.route("/fy2b/video/<v_id>")
 def video(v_id='404'):
-	vid_file_url = vid_url+vid_url+".mp4"
+	vid_file_url = vid_url+v_id+".mp4"
 	status = requests.head(vid_file_url)
 	if str(status.status_code)[0] != '2':
 		sleep(1)
