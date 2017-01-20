@@ -24,12 +24,12 @@ class info(object):
 	"""docstring for info"""
 	def __init__(self, vid):
 		super(info, self).__init__()
-		self.json = json.loads(subprocess.check_output(['youtube-dl', '-j', vid]).decode('utf-8', 'ignore'))
-		self.title = json['title']
-		self.description = json['description']
-		self.like = json['like_count']
-		self.dislike = json['dislike_count']
-		self.views = json['view_count']
+		self.j = json.loads(subprocess.check_output(['youtube-dl', '-j', vid]).decode('utf-8', 'ignore'))
+		self.title = self.j['title']
+		self.description = self.j['description']
+		self.like = self.j['like_count']
+		self.dislike = self.j['dislike_count']
+		self.views = self.j['view_count']
 		
 
 
