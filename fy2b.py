@@ -3,6 +3,7 @@ import subprocess
 import requests
 from time import sleep
 import os
+import json
 import base64
 
 fy2b_dir = "/root/fy2b"
@@ -18,6 +19,18 @@ def download_video(input_vid):
 def get_info(parameter, vid):
 	output = subprocess.check_output(['youtube-dl', parameter, vid])
 	return output.decode('utf-8', "ignore")
+
+class info(object):
+	"""docstring for info"""
+	def __init__(self, vid):
+		super(info, self).__init__()
+		self.json = json.loads(subprocess.check_output(['youtube-dl', '-j', vid]).decode('utf-8', 'ignore'))
+		self.title = json['title']
+		self.description = json['description']
+		self.like = json['like_count']
+		self.dislike = json['dislike_count']
+		self.views = json['view_count']
+		
 
 
 app = Flask(__name__)
@@ -46,8 +59,15 @@ def downloader(url="https://www.baidu.com"):
 def index():
 	if request.method == "GET":
 		vid = request.args.get('v')
+		vid_info = info(vid)
 		download_video(request.args.get('v'))
-	return(render_template(player_templapte, vid = request.args.get('v'), title = get_info('--get-title', vid), description = get_info('--get-description', vid)))
+	return(render_template(player_templapte, 
+		vid = request.args.get('v'), 
+		title = vid_info.title, 
+		description = vid_info.description,
+		like = vid_info.like,
+		dislike = vid_info.dislike,
+		views = vid_info.views))
 
 @app.route("/video")
 @app.route("/video/<v_id>")
