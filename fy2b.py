@@ -14,7 +14,7 @@ player_templapte = "player.html"
 def download_video(input_vid):
 	if os.path.isfile(fy2b_dir+'/videos/{}.lock'.format(input_vid)) == False:
 		subprocess.call(["touch", fy2b_dir+"/videos/{}.lock".format(input_vid)])
-		subprocess.Popen(["youtube-dl", '-f', 'bestvideo[height<=480]+bestaudio[ext=m4a]', "https://www.youtube.com/watch?v={}".format(input_vid), '-o', fy2b_dir+'/videos/%(id)s.mp4'])
+		subprocess.Popen(["youtube-dl", '-f', 'bestvideo[height<=360]+bestaudio[ext=m4a]', "https://www.youtube.com/watch?v={}".format(input_vid), '-o', fy2b_dir+'/videos/%(id)s.mp4'])
 
 def get_info(parameter, vid):
 	output = subprocess.check_output(['youtube-dl', parameter, vid])
