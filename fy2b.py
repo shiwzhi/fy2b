@@ -6,7 +6,7 @@ import os
 import json
 import base64
 
-fy2b_dir = "/root/fy2b"
+fy2b_dir = "/var/fy2b"
 vid_url = "https://swz1994.com/fy2b/videos/"
 
 player_templapte = "player.html"
@@ -76,7 +76,7 @@ def video(v_id='404'):
 	vid_file_url = vid_url+v_id+".mp4"
 	status = requests.head(vid_file_url)
 	if str(status.status_code)[0] != '2':
-		sleep(1)
+		sleep(3)
 		return(redirect(request.url))
 		# status = requests.head(status.headers["Location"])
 	else:
