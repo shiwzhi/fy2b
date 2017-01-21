@@ -67,7 +67,8 @@ def index():
 		description = vid_info.description,
 		like = vid_info.like,
 		dislike = vid_info.dislike,
-		views = vid_info.views))
+		views = vid_info.views,
+		j = vid_info.j))
 
 @app.route("/fy2b/video")
 @app.route("/fy2b/video/<v_id>")
