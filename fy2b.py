@@ -7,8 +7,7 @@ import json
 import base64
 
 fy2b_dir = "/var/fy2b"
-vid_url = "https://swz1994.com/fy2b/videos/"
-
+fy2b_url_root = "https://swz1994.com/fy2b"
 player_templapte = "player.html"
 
 def download_video(input_vid):
@@ -52,8 +51,11 @@ def downloader(url="https://www.baidu.com"):
 	response.headers['Content-Disposition'] = 'attachment; filename=1.torrent'
 	return response
 
-
 @app.route("/fy2b")
+def default():
+	return(redirect(fy2b_url_root+"/watch?v={}".format("dQw4w9WgXcQ")))
+
+
 @app.route("/fy2b/index.php")
 @app.route("/fy2b/watch")
 def index():
@@ -73,7 +75,7 @@ def index():
 @app.route("/fy2b/video")
 @app.route("/fy2b/video/<v_id>")
 def video(v_id='404'):
-	vid_file_url = vid_url+v_id+".mp4"
+	vid_file_url = fy2b_url_root+"/videos/{}.mp4".format(v_id)
 	status = requests.head(vid_file_url)
 	if str(status.status_code)[0] != '2':
 		sleep(3)
