@@ -6,6 +6,15 @@
 	<link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/4.0.0-alpha.4/css/bootstrap.css">
 	<script src="//cdn.bootcss.com/jquery/3.1.1/jquery.min.js"></script>
 	<script src="//cdn.bootcss.com/bootstrap/4.0.0-alpha.4/js/bootstrap.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$( "#clicked" ).click(function() {
+				var url = $("#url").val();
+				url = url.split("watch?v=");
+				$("#url").val(url[1]);
+			});
+		});
+	</script>
 
 	<title>fy2b</title>
 </head>
@@ -35,11 +44,15 @@
 		<div class="row">
 			<div class="col-md-6">{{ description }}</div>
 		</div>
-
-				
-
 			
+		<br>
 
+		<form action="/fy2b/watch">
+		<div class="form-group">
+			<input type="text" class="form-control" id="url" placeholder="url" name="v">
+			<button class="btn btn-primary" id="clicked">go</button>
+		</div>
+	</form>
 
 		
 
