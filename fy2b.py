@@ -16,7 +16,10 @@ from urllib.parse import urlparse
 fy2b_dir = os.path.abspath(os.path.dirname(__file__))
 video_dir = fy2b_dir+'/videos'
 player_templapte = "player.html"
-host_url = 'https://swz1994.com/fy2b/videos'
+host = 'https://swz1994.com'
+host_url = host+'/fy2b/videos'
+
+
 
 def download_video(input_vid):
 	if os.path.isfile(video_dir+'/{}.lock'.format(input_vid)) == False:
@@ -69,7 +72,7 @@ def downloader(url="https://www.baidu.com"):
 @app.route("/fy2b")
 @app.route("/fy2b/")
 def default():
-	return(redirect(fy2b_url_root+"/watch?v={}".format("dQw4w9WgXcQ")))
+	return(redirect(host+"fy2b/watch?v={}".format("dQw4w9WgXcQ")))
 
 
 @app.route("/fy2b/index.php")
