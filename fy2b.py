@@ -72,7 +72,7 @@ def downloader(url="https://www.baidu.com"):
 @app.route("/fy2b")
 @app.route("/fy2b/")
 def default():
-	return(redirect(host+"fy2b/watch?v={}".format("dQw4w9WgXcQ")))
+	return(redirect(host+"/fy2b/watch?v={}".format("dQw4w9WgXcQ")))
 
 
 @app.route("/fy2b/index.php")
