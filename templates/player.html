@@ -23,7 +23,7 @@
 		<div class="row">
 		<div class="col-md-12">
 			<video width="100%" height="auto" controls autoplay playsinline>
-					<source src={{ url_for("video") }}/{{ vid }}>
+					<source src={{ url_for("video") }}/{{ info.vid }}>
 					你的浏览器已经灭绝了
 			</video>
 		</div>
@@ -33,26 +33,31 @@
 		</div>
 		
 		<div class="row">
-			<div class="col-md-12" style="font-size: 24px"><a href="https://www.youtube.com/watch?v={{ vid }}" target="_blank">{{ title }}</a></div>
+			<div class="col-md-12" style="font-size: 24px"><a href="https://www.youtube.com/watch?v={{ info.vid }}" target="_blank">{{ info.title }}</a></div>
 		</div>
 		<div class="row">
 			<div class="col-md-12" style="font-size: 24px">{{ views }} views</div>
-			<div class="col-md-12">{{ j['uploader'] }}</div>
-			<div class="col-md-12">{{like}} likes  {{dislike}} dislikes</div>
+			<div class="col-md-12">{{ info.uploader }}</div>
+			<div class="col-md-12">{{info.like}} likes  {{info.dislike}} dislikes</div>
 			</div>
 		<br>
 		<div class="row">
-			<div class="col-md-6">{{ description }}</div>
+			<div class="col-md-6">{{ info.description }}</div>
 		</div>
 			
 		<br>
 
+		
 		<form action="/fy2b/watch">
-			<div class="form-group">
+		<div class="row">
+			<div class="form-group col-md-6">
 				<input type="text" class="form-control" id="url" placeholder="url" name="v">
 			</div>
+		</div>
+		
 			<button class="btn btn-default" id="clicked">go</button>
 		</form>
+		
 
 		
 

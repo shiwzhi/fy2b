@@ -4,31 +4,46 @@ import requests
 from time import sleep
 import os
 import json
+import pickle
 import base64
+from urllib.parse import urlparse
 
-fy2b_dir = "/var/fy2b"
-fy2b_url_root = "https://swz1994.com/fy2b"
+## refer to it's hostname
+
+
+
+
+fy2b_dir = os.path.abspath(os.path.dirname(__file__))
+video_dir = fy2b_dir+'/videos'
 player_templapte = "player.html"
+host_url = 'https://swz1994.com/fy2b/videos'
 
 def download_video(input_vid):
-	if os.path.isfile(fy2b_dir+'/videos/{}.lock'.format(input_vid)) == False:
-		subprocess.call(["touch", fy2b_dir+"/videos/{}.lock".format(input_vid)])
-		subprocess.Popen(["youtube-dl", '-f', 'bestvideo[height<=360]+bestaudio[ext=m4a]', "https://www.youtube.com/watch?v={}".format(input_vid), '-o', fy2b_dir+'/videos/%(id)s.mp4'])
+	if os.path.isfile(video_dir+'/{}.lock'.format(input_vid)) == False:
+		subprocess.call(["touch", video_dir+"/{}.lock".format(input_vid)])
+		subprocess.Popen(["youtube-dl", '-f', 'bestvideo[height<=480]+bestaudio[ext=m4a]', "https://www.youtube.com/watch?v={}".format(input_vid), '-o', video_dir+'/%(id)s.mp4'])
 
-def get_info(parameter, vid):
-	output = subprocess.check_output(['youtube-dl', parameter, vid])
-	return output.decode('utf-8', "ignore")
 
 class info(object):
 	"""docstring for info"""
 	def __init__(self, vid):
 		super(info, self).__init__()
-		self.j = json.loads(subprocess.check_output(['youtube-dl', '-j', vid]).decode('utf-8', 'ignore'))
-		self.title = self.j['title']
-		self.description = self.j['description']
-		self.like = self.j['like_count']
-		self.dislike = self.j['dislike_count']
-		self.views = self.j['view_count']
+		info_file = video_dir+'/{}.info'.format(vid)
+		if os.path.isfile(info_file) == False:
+			vid_json = subprocess.check_output(['youtube-dl', '-j', vid]).decode('utf-8', 'ignore')
+			self.json = json.loads(vid_json)
+			pickle.dump(self.json, open(info_file, 'wb'))
+			print('info dumped')
+		else:
+			self.json = pickle.load(open(info_file, 'rb'))
+			print('info loaded')
+		self.title = self.json['title']
+		self.description = self.json['description']
+		self.like = self.json['like_count']
+		self.dislike = self.json['dislike_count']
+		self.views = self.json['view_count']
+		self.vid = vid
+		self.uploader = self.json['uploader']
 		
 
 
@@ -52,6 +67,7 @@ def downloader(url="https://www.baidu.com"):
 	return response
 
 @app.route("/fy2b")
+@app.route("/fy2b/")
 def default():
 	return(redirect(fy2b_url_root+"/watch?v={}".format("dQw4w9WgXcQ")))
 
@@ -63,27 +79,20 @@ def index():
 		vid = request.args.get('v')
 		vid_info = info(vid)
 		download_video(request.args.get('v'))
-	return(render_template(player_templapte, 
-		vid = request.args.get('v'), 
-		title = vid_info.title, 
-		description = vid_info.description,
-		like = vid_info.like,
-		dislike = vid_info.dislike,
-		views = vid_info.views,
-		j = vid_info.j))
+	return(render_template(player_templapte, info=vid_info))
 
 @app.route("/fy2b/video")
 @app.route("/fy2b/video/<v_id>")
 def video(v_id='404'):
-	vid_file_url = fy2b_url_root+"/videos/{}.mp4".format(v_id)
-	status = requests.head(vid_file_url)
+	video_url = "{}/{}.mp4".format(host_url, v_id)
+	status = requests.head(video_url)
 	if str(status.status_code)[0] != '2':
-		sleep(3)
+		sleep(1)
 		return(redirect(request.url))
 		# status = requests.head(status.headers["Location"])
 	else:
-		return(redirect(vid_file_url))
+		return(redirect(video_url))
 
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0')
+    app.run(host='0.0.0.0',port=5001)
