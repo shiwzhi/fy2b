@@ -33,7 +33,7 @@ class info(object):
 		super(info, self).__init__()
 		info_file = video_dir+'/{}.info'.format(vid)
 		if os.path.isfile(info_file) == False:
-			vid_json = subprocess.check_output(['youtube-dl', '-j', vid]).decode('utf-8', 'ignore')
+			vid_json = subprocess.check_output(['youtube-dl', '-j', "https://www.youtube.com/watch?v="+vid]).decode('utf-8', 'ignore')
 			self.json = json.loads(vid_json)
 			pickle.dump(self.json, open(info_file, 'wb'))
 			print('info dumped')
