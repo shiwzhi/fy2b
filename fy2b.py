@@ -5,13 +5,8 @@ from time import sleep
 import os
 import json
 import pickle
-import base64
-from urllib.parse import urlparse
 
 ## refer to it's hostname
-
-
-
 
 fy2b_dir = os.path.abspath(os.path.dirname(__file__))
 video_dir = fy2b_dir+'/videos'
@@ -61,13 +56,6 @@ if app.config["DEBUG"]:
         response.headers["Pragma"] = "no-cache"
         return response
 
-@app.route("/fy2b/d/<url>")
-def downloader(url="https://www.baidu.com"):
-	r = requests.get(base64.b64decode(url).decode("utf-8"))
-	response = make_response(r.content)
-	response.headers['Content-Type'] = 'application/x-bittorrent'
-	response.headers['Content-Disposition'] = 'attachment; filename=1.torrent'
-	return response
 
 @app.route("/fy2b")
 @app.route("/fy2b/")
@@ -81,12 +69,12 @@ def index():
 	if request.method == "GET":
 		vid = request.args.get('v')
 		vid_info = info(vid)
-		download_video(request.args.get('v'))
 	return(render_template(player_templapte, info=vid_info))
 
 @app.route("/fy2b/video")
 @app.route("/fy2b/video/<v_id>")
 def video(v_id='404'):
+	download_video(v_id)
 	video_url = "{}/{}.mp4".format(host_url, v_id)
 	status = requests.head(video_url)
 	if str(status.status_code)[0] != '2':
