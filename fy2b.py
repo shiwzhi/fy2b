@@ -11,7 +11,7 @@ import pickle
 fy2b_dir = os.path.abspath(os.path.dirname(__file__))
 video_dir = fy2b_dir+'/videos'
 player_templapte = "player.html"
-host = 'https://swz1994.com'
+host = 'http://swz1994.com'
 host_url = host+'/fy2b/videos'
 
 
@@ -19,7 +19,7 @@ host_url = host+'/fy2b/videos'
 def download_video(input_vid):
 	if os.path.isfile(video_dir+'/{}.lock'.format(input_vid)) == False:
 		subprocess.call(["touch", video_dir+"/{}.lock".format(input_vid)])
-		subprocess.Popen(["youtube-dl", '-f', 'bestvideo[height<=480]+bestaudio[ext=m4a]', "https://www.youtube.com/watch?v={}".format(input_vid), '-o', video_dir+'/%(id)s.mp4'])
+		subprocess.Popen(["youtube-dl", '-f', 'mp4', "https://www.youtube.com/watch?v={}".format(input_vid), '-o', video_dir+'/%(id)s.mp4'])
 
 
 class info(object):
