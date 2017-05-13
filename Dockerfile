@@ -1,6 +1,6 @@
 FROM alpine:latest
 
-RUN apk update;apk add python3 wget uwsgi ca-certificates ffmpeg
+RUN apk update;apk add python3 wget uwsgi ca-certificates ffmpeg uwsgi-python3
 RUN pip3 install requests flask
 
 WORKDIR /root
