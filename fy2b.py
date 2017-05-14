@@ -11,7 +11,7 @@ import pickle
 fy2b_dir = os.path.abspath(os.path.dirname(__file__))
 video_dir = fy2b_dir+'/videos'
 player_templapte = "player.html"
-host = 'http://swz1994.com'
+host = 'https://swz1994.com'
 host_url = host+'/fy2b/videos'
 
 
